@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
+import TodoList from "./components/TodoList";
+import TextField from '@mui/material/TextField';
+import { Button } from "@mui/material";
+import { useState } from "react";
+import {v4} from 'uuid';
 function App() {
+  const [todolist, setTodolist] = useState([]);
+  const [textinput, setInput] = useState("");
+  const ontextChange = (e) => {
+    setInput (e.target.value);
+  };
+  const onAdd = (e) => {
+    setTodolist([...todolist,{id: v4(), name: textinput,incomplete: false}]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>
+  <h3>Danh sách cần làm </h3>
+  <TextField 
+  name = "nhap" 
+  placeholder = "Nhập tên"
+  value = {textinput} 
+  onChange={ontextChange}
+  ></TextField>
+  <Button variant="contained" color="primary" disabled = {!textinput} onClick={onAdd}>Thêm</Button>
+  <TodoList todolist ={todolist}/>
+  </div>
+  )
 }
 
 export default App;
